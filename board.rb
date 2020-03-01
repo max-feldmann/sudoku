@@ -49,14 +49,16 @@ class Board
 
 end
 
+
+# ----------- STUFF TO TEST & PLAY AROUND ---------------
+
 b = Board.produce_tiles("puzzles/sudoku1.txt")
 
 vals =  
 b.grid.each do |row|
-    row.map {|tile| tile.value} 
-    #row.each do |tile|
-    #vals << tile.value.to_s
-    #end
+    row.each do |tile|
+    vals << tile.value.to_s
+    end
 end
 
 p b.grid
