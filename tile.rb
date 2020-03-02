@@ -1,5 +1,5 @@
 
-require 'colorize'
+#require 'colorize'
 
 class Tile
     
@@ -24,7 +24,7 @@ class Tile
     end
 
     def to_s
-        value == 0 ? " " : value.to_s.colorize(color)
+        value == 0 ? " " : value.to_s  # .colorize(color)
     end
 
     def value=(new_val)

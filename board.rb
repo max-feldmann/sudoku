@@ -1,9 +1,7 @@
 require_relative "tile"
 
 class Board
-    attr_reader :grid
-
-    # -------------- GENERATION/INITIALISATION OF THE BOARD ----------------------------------
+    # -------------- SETUP/INITIALISATION OF THE BOARD ----------------------------------
 
     def self.empty_grid # produces an empty gird 9 X 9
         Array.new(9) do
@@ -44,9 +42,42 @@ class Board
         @grid = grid
     end
 
-    # ----------------- ACTUAL BOARD METHODS ------------------------------------
+    # ----------------- RENDER & ACCESS BOARD ------------------------------------
+
+    def render
+        puts "  #{(0..8).to_a.join(" ")}"
+        grid.each_with_index do |row, i|
+            puts "#{i} #{row.map(&:to_s).join(" ")}"
+        end
+    end
+
+    def [](pos) # Access board at given position
+      row, col = pos
+      grid[row][col]
+    end
+    
+    def []=(pos, value) # set value on board at given position
+      row, col = pos
+      tile = grid[row][col]
+      tile.value = value
+    end
+
+    def columns # transpose [[1,2,3], [4,5,6]].transpose => [[1,4], [2,5],[3,6]]
+        grid.transpose
+    end
+
+    def rows # returns grid
+        grid
+    end
+
+    # --------------- CHECK IF BOARD IS SOLVED -----------------
 
 
+
+
+    private
+
+    attr_reader :grid
 end
 
 
@@ -54,13 +85,5 @@ end
 
 b = Board.produce_tiles("puzzles/sudoku1.txt")
 
-vals =  
-b.grid.each do |row|
-    row.each do |tile|
-    vals << tile.value.to_s
-    end
-end
 
-p b.grid
-p vals
-p vals.length
+b.render
