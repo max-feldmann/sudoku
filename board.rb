@@ -70,7 +70,48 @@ class Board
         grid
     end
 
+
+    def square(idx)
+        # "Square-Algorithm" explained
+        # takes advantage of division by non-floats => 0-2 will return 0. 3-5 will return 1. 6-9 will return 3
+        # takes advantage of modulo behaviour. => 0 % 3 = 0 | 1 % 3 = 1 | 2 % 3 = 2 | 3 % 3 = 0 | 4 % 3 = 1 and so on
+        # so for first iteration of squares, we pass idx = 0 and get x,y = 0,0. 2nd we pass 1 and get x,y = 0, 1. 0,0/0,1/0,2/1,0/1,1/1,2/2,0/2,1/2,2
+        # x and y are the multiplied by 3 to get the "starting points" => 0,0/0,3/0,6/3,0/3,3/3,6/6,0/6,3/6,6
+            # each loop now. for idx = 0 we go from x = 0 up to and including x = 2
+            # for y its the same
+            # we capture the tiles from grid at indices 0,0 to 2,2 and shovel them to tiles.
+            # tiles contains 9 positions now and is returned
+        # now we get idx = 1 and the routine starts again.
+        tiles = []
+        x = (idx / 3) * 3
+        y = (idx % 3) * 3
+    
+        (x...x + 3).each do |i|
+          (y...y + 3).each do |j|
+            tiles << self[[i, j]]
+          end
+        end
+    
+        tiles
+    end
+    
+    def squares
+        # numbers 0 to 8 are passed to square, which return a 9-piece set of tiles (aka a square)
+        # (0..8) is turned to an array. that array is then turned to a 2D array, where every nubmer becomes on of said tiles
+        (0..8).to_a.map { |i| square(i) }
+    end
+
     # --------------- CHECK IF BOARD IS SOLVED -----------------
+    def is_it_a_solved_set?(tiles)
+        nums = tiles.map(&:value)
+        nums.sort == (1..9).to_a
+    end
+
+    def is_the_whole_board_solved?
+        rows.all?{|row| is_it_a_solved_set?(row)} &&
+            columns.all?{|column| is_it_a_solved_set?(column)} &&
+            squares.all?{|square| is_it_a_solved_set?(square)}
+    end
 
 
 
