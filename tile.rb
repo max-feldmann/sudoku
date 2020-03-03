@@ -1,13 +1,12 @@
 
-#require 'colorize'
+require 'colorize'
 
 class Tile
     
     attr_reader :value
 
     def initialize(value)
-        @given = false
-        @given = true if value == 0
+        @given = value == 0 ? false : true
         @value = value
     end
 
@@ -24,16 +23,16 @@ class Tile
     end
 
     def to_s
-        value == 0 ? " " : value.to_s  # .colorize(color)
+        value == 0 ? " " : value.to_s.colorize(color)
     end
 
     def value=(new_val)
         if given?
-            puts "Sorrio, you can´t change the value of a tile that was given, cheater :|"
+            puts
+            puts "!!! Sorrio, you can´t change the value of a tile that was given, cheater :|"
+            puts
         else
             @value = new_val
         end
     end
-
-
 end

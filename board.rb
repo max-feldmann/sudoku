@@ -36,7 +36,7 @@ class Board
 
         self.new(tiles) # create new instance of board with "tiles" as value. tiles is 2D grid of Tile-Instances with length of the files rows
     end
-
+    
     def initialize (grid = Board.empty_grid)
         #initialise Board with a grid. Empty grid as default value.
         @grid = grid
@@ -45,11 +45,11 @@ class Board
     # ----------------- RENDER & ACCESS BOARD ------------------------------------
 
     def render
-        puts "  #{(0..8).to_a.join(" ")}"
+        puts "  #{(0..8).to_a.join(' ')}"
         grid.each_with_index do |row, i|
-            puts "#{i} #{row.map(&:to_s).join(" ")}"
+          puts "#{i} #{row.join(' ')}"
         end
-    end
+      end
 
     def [](pos) # Access board at given position
       row, col = pos
@@ -71,7 +71,7 @@ class Board
     end
 
 
-    def square(idx)
+    def square(idx) # => returns 1 square as an array
         # "Square-Algorithm" explained
         # takes advantage of division by non-floats => 0-2 will return 0. 3-5 will return 1. 6-9 will return 3
         # takes advantage of modulo behaviour. => 0 % 3 = 0 | 1 % 3 = 1 | 2 % 3 = 2 | 3 % 3 = 0 | 4 % 3 = 1 and so on
@@ -88,14 +88,14 @@ class Board
     
         (x...x + 3).each do |i|
           (y...y + 3).each do |j|
-            tiles << self[[i, j]]
+            tiles << self[[i, j]].to_s
           end
         end
     
         tiles
     end
     
-    def squares
+    def squares # => Returns all the squares in a 2D array
         # numbers 0 to 8 are passed to square, which return a 9-piece set of tiles (aka a square)
         # (0..8) is turned to an array. that array is then turned to a 2D array, where every nubmer becomes on of said tiles
         (0..8).to_a.map { |i| square(i) }
@@ -103,18 +103,17 @@ class Board
 
     # --------------- CHECK IF BOARD IS SOLVED -----------------
     def is_it_a_solved_set?(tiles)
-        nums = tiles.map(&:value)
+        nums = tiles.map(&:to_s)
         nums.sort == (1..9).to_a
     end
 
-    def is_the_whole_board_solved?
+    def solved?
         rows.all?{|row| is_it_a_solved_set?(row)} &&
             columns.all?{|column| is_it_a_solved_set?(column)} &&
             squares.all?{|square| is_it_a_solved_set?(square)}
     end
 
-
-
+    #---------------UTILITY------------
 
     private
 
@@ -124,7 +123,6 @@ end
 
 # ----------- STUFF TO TEST & PLAY AROUND ---------------
 
-b = Board.produce_tiles("puzzles/sudoku1.txt")
-
-
-b.render
+# b = Board.produce_tiles("puzzles/sudoku1.txt")
+# 
+# b.render
