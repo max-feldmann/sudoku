@@ -10,16 +10,19 @@ class Sudoku
     #----------GAME-LOGIC------------
 
     def play_turn
+        board.render
         pos = get_position
         val = get_value
-        board[pos]= val
-        board.render
+        board[pos] = val
     end
 
     def run
-        play_turn until solved?
+        until solved?
+            play_turn
+        end
+
         board.render
-        puts "See you next time!"
+        puts "Congrats, you win! See you next time!"
     end
 
     #------------GET VAL & POSITION -----------
@@ -61,19 +64,20 @@ class Sudoku
     end
 
     def parse_position(position) #=> Returns position in the form of [0,0] (1Dim Array length 2, w/ 2 integers)
-        position.split(" ").map {|char| char.to_i}
+        position.split(" ").map {|char| Integer(char)}
     end
     
     def parse_value(value) #=> returns value as an integer
-        value.to_i
+        Integer(value)
     end
 
     #-----------UTILITY----------
     def solved?
-        board.solved?
+        @board.solved?
     end
 
     private
+
     attr_reader :board
 
 end
@@ -82,6 +86,7 @@ end
 #---------START A GAME-----
 
 # Change puzzle-name in class call to change puzzle
+# run sudoku.rb to start a game (ruby sudoku.rb)
 
 s = Sudoku.new("puzzles/sudoku1_almost.txt")
 s.run

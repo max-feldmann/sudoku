@@ -6,8 +6,8 @@ class Tile
     attr_reader :value
 
     def initialize(value)
-        @given = value == 0 ? false : true
         @value = value
+        @given = value == 0 ? false : true
     end
 
     def color
@@ -29,7 +29,7 @@ class Tile
     def value=(new_val)
         if given?
             puts
-            puts "!!! Sorrio, you can´t change the value of a tile that was given, cheater :|"
+            puts "!!! Sorrio, you can´t change the value of a tile that was given, *cough* cheater :|"
             puts
         else
             @value = new_val

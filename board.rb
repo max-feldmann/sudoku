@@ -1,5 +1,5 @@
 require_relative "tile"
-
+#require 'byebug'
 class Board
     # -------------- SETUP/INITIALISATION OF THE BOARD ----------------------------------
 
@@ -88,7 +88,7 @@ class Board
     
         (x...x + 3).each do |i|
           (y...y + 3).each do |j|
-            tiles << self[[i, j]].to_s
+            tiles << self[[i, j]]
           end
         end
     
@@ -102,15 +102,23 @@ class Board
     end
 
     # --------------- CHECK IF BOARD IS SOLVED -----------------
-    def is_it_a_solved_set?(tiles)
-        nums = tiles.map(&:to_s)
+    def solved_set?(tiles)
+        nums = []
+        tiles.each do |tile|
+            nums << tile.value.to_i
+        end
+
         nums.sort == (1..9).to_a
     end
 
     def solved?
-        rows.all?{|row| is_it_a_solved_set?(row)} &&
-            columns.all?{|column| is_it_a_solved_set?(column)} &&
-            squares.all?{|square| is_it_a_solved_set?(square)}
+        if
+        rows.all?{|row| solved_set?(row)} &&
+            columns.all?{|column| solved_set?(column)} &&
+            squares.all?{|square| solved_set?(square)}
+            return true
+        end
+        false
     end
 
     #---------------UTILITY------------
@@ -123,6 +131,5 @@ end
 
 # ----------- STUFF TO TEST & PLAY AROUND ---------------
 
-# b = Board.produce_tiles("puzzles/sudoku1.txt")
-# 
-# b.render
+#b = Board.produce_tiles("puzzles/sudoku1.txt")
+#p b.render
