@@ -3,6 +3,8 @@ require_relative "tile"
 
 class Sudoku
 
+    attr_reader :run, :grid, :board
+    
     def initialize(filename)
         @board = Board.produce_tiles(filename)
     end
@@ -83,10 +85,12 @@ class Sudoku
 end
 
 
-#---------START A GAME-----
+#---------START A GAME WITHOUT BOOTER-----
+
+# Starting a Game from this Class wo/ using boot.rb:
 
 # Change puzzle-name in class call to change puzzle
 # run sudoku.rb to start a game (ruby sudoku.rb)
 
-s = Sudoku.new("puzzles/sudoku1_almost.txt")
-s.run
+#s = Sudoku.new("puzzles/sudoku1_almost.txt")
+#s.run
